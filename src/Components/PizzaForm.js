@@ -114,6 +114,7 @@ const PizzaForm = () => {
                 value={orderForm.name}
                 onChange={formDataChange}
             />
+            {errors.name.length > 0 ? <p style={{color:'red'}}>{errors.name}</p> : null}
         </label>
         <label htmlFor='size'>
             Select Your Size: 
