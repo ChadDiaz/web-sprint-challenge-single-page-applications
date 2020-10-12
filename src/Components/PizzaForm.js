@@ -2,12 +2,18 @@ import React, { useState, useEffect} from 'react'
 import axios from 'axios'
 import * as yup from 'yup'
 import styled from 'styled-components'
+import imgBack from '../Assets/background.jpg'
 
-
-
-
-
-
+const PizzaDiv = styled.div`
+  width: 400px;
+  background: #6495ED;
+  color: white;
+  padding: 2%;
+  position: fixed;
+  margin: 2% 15% 15% 30%;
+  border-radius: 10px;
+  overflow: hidden;
+`;
 
 
 const PizzaForm = () => {
@@ -33,29 +39,69 @@ const PizzaForm = () => {
     const[errors, setErrors] = useState({
         name: '',
     })
-    const[buttonOff, setButtonOff] = useState(true)
+    
     const[apiData, setApiData] = useState(null)
 
     //Validation coding below - using Yup
+    const schema = yup.object().shape({
+        name: yup.string().required("Must Input Name").min(2,"min 2 letters required")
+    })
+
+    const validateData = (e) => {
+        yup.reach(schema, e.target.name).validate(e.target.value)
+        .then((val) => {
+            setErrors({...errors, [e.target.name]:''})
+        })
+        .catch((err) => {
+            setErrors({...errors, [e.target.name]: err.errors[0]})
+        })
+    }
 
     // Change Form Data Function
     const formDataChange = (e) => {
+        e.persist()
+        
         if(e.target.type === 'checkbox'){
             setOrderForm({...orderForm, toppings:{
                 ...orderForm.toppings, [e.target.value]: e.target.checked}})
         }else{
             setOrderForm({...orderForm, [e.target.name]:e.target.value})
         }
+        if(e.target.name==='name'){
+            validateData(e);
+        }
     }
 
     // Form Submit Function
     const submitForm = (e) => {
         e.preventDefault();
+        axios.post('https://reqres.in/api/users', orderForm)
+        .then(response => {
+            setApiData(response.data)
+            setOrderForm({
+                name:'',
+                size:{
+                    small: false,
+                    medium: false,
+                    large: false,
+                    extraLarge: false,
+                },
+                toppings: {
+                    pepperoni: false,
+                    sausage: false,
+                    mushrooms: false,
+                    blackOlives: false,
+                    greenPepper: false,
+                    onion: false,
+                },
+                instructions: '',
+            })
+        }).catch(err => console.log ("this is the error" , err))
     }
 
 
     return (
-    <div>
+    <PizzaDiv>
         <form onSubmit={submitForm}>
         <label htmlFor='name'>
             Your Full Name: 
@@ -65,7 +111,7 @@ const PizzaForm = () => {
                 type='text'
                 placeholder='Enter Name'
                 data-cy='name'
-                value=""
+                value={orderForm.name}
                 onChange={formDataChange}
             />
         </label>
@@ -76,7 +122,7 @@ const PizzaForm = () => {
                 name='size'
                 data-cy='size'
                 defaultValue='large'
-                value=""
+                value={orderForm.size}
                 onChange={formDataChange}>
                     <option value='small' data-cy='small'>Small</option>
                     <option value='medium' data-cy='medium'>Medium</option>
@@ -159,7 +205,7 @@ const PizzaForm = () => {
                     id='instructions'
                     name='instructions'
                     data-cy='instruction'
-                    value=""
+                    value={orderForm.instructions}
                     placeholder="Special Instructions Here"
                     onChange={formDataChange}
                 />
@@ -177,12 +223,12 @@ const PizzaForm = () => {
                 }}
                 type="submit"
                 data-cy='submit'
-                disabled={buttonOff}
             >
             Order Now
             </button>
-        </form>   
-    </div>
+        </form> 
+        <pre style={{color:"black"}}>{JSON.stringify(apiData, null, 2)}</pre>
+    </PizzaDiv>
     )
 }
 

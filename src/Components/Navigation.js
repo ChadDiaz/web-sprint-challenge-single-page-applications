@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const NavigationDiv = styled.div`
     width: 100%;
-    background: #6495ED;
+    background: green;
     display: flex;
     justify-content: flex-end;
     height: 5rem;

@@ -14,7 +14,7 @@ const Home = () => {
       <h1
         style={{
           position: "fixed",
-          color: "white",
+          color: "#161E2A",
           fontSize: "5rem",
           marginLeft: "20%",
           fontFamily: "Sansita Swashed",
@@ -26,9 +26,9 @@ const Home = () => {
         style={{
           position: "fixed",
           color: "white",
-          fontSize: "2rem",
-          marginLeft: "55%",
-          marginTop: "20%",
+          fontSize: "2.3rem",
+          marginLeft: "40%",
+          marginTop: "31%",
           fontFamily: "Sansita Swashed",
         }}
       >
