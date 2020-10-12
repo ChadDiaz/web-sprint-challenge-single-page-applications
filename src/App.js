@@ -13,8 +13,6 @@ const App = () => {
         <Route path="/pizza-form" render={() => <PizzaForm />} />
         <Route path="/" render={() => <Home />} />
       </Switch>
-    
-    
     </>
   );
 };
