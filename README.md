@@ -36,9 +36,11 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 1. How would you explain form validation to someone who has never programmed before?
 
-    //
+    // validation is a way to ensure the inputs are filled out and that they are of the type we expect.  
 
 1. In 1-2 sentences, define end to end testing.
+
+    // this type of testing allows the project designer to catch bugs by mimicking the user journey using automated scripts. 
 
 ## Instructions
 
